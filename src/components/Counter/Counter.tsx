@@ -1,18 +1,33 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Counter.scss'
 
 interface Props {
-  number: number
   Icon: any
   target: number
   category: string
 }
 
-const Counter = ({ number, Icon, target, category }: Props) => {
+const Counter = ({ Icon, target, category }: Props) => {
+  const [counter, setCounter] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (counter >= target) {
+        clearInterval(interval)
+      } else {
+        setCounter((counter) => counter + 10)
+      }
+    }, 1)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [counter, target])
+
   return (
     <div className='counter'>
       <Icon className='counter__icon' />
-      <div className='counter__target'>{number}</div>
+      <div className='counter__target'>{counter}</div>
       <p>{category}</p>
     </div>
   )
