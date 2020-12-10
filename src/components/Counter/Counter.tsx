@@ -10,19 +10,21 @@ interface Props {
 const Counter = ({ Icon, target, category }: Props) => {
   const [counter, setCounter] = useState(0)
 
+  const incrementAmount = Math.floor(target / 100)
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (counter >= target) {
         clearInterval(interval)
       } else {
-        setCounter((counter) => counter + 10)
+        setCounter((counter) => counter + incrementAmount)
       }
     }, 1)
 
     return () => {
       clearInterval(interval)
     }
-  }, [counter, target])
+  }, [counter, target, incrementAmount])
 
   return (
     <div className='counter'>
